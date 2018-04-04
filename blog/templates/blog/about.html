@@ -1,0 +1,37 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block header %}
+        <header class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>{LocalCode}</h1>
+                        <hr class="small">
+                        <span class="subheading">About</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+           <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <p>Hi guys all right?</p>
+
+                               <p>I'm just like you dig write code but at times I forget how to do something  Dory.jpg</p>
+
+                               <p>So I wrote this blog.If you want to talk, then somewhere here were my <a href = "{% url 'blog:contact' %}">contacts.</a></p>
+
+                               <p>Abysinnia!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <hr>
+{% endblock content %}

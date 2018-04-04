@@ -1,0 +1,67 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block header %}
+{% load social_share %}
+
+        <header class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>{LocalCode}</h1>
+                        <hr class="small">
+                        <span class="subheading">One more things</span>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+        <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {% for article in articles %}
+                <div class="post-preview">
+                    <a href="{% url 'blog:read_article' article.id %}">
+                        <h1 class="post-title">
+                            {{ article.title }}
+                        </h1>
+                        <h3 class="post-subtitle">
+                            {{ article.subtitle }}
+                        </h3>
+                        <p class="post-meta">Posted by <a href="{{article.owner.id}}">{{article.owner}}</a> {{ article.date_created|date:'M d, Y H:i' }}</p>
+                        <p><small class="post-meta">{% bootstrap_icon "tag" %}<a href="{% url 'blog:category' article.category_id%}">{{article.category}}</a></small></p>
+                        {{ article.text|safe }}
+                    </a>
+                    {% post_to_twitter "New Article: {{object.title}}. Check it out!" object_or_url "Post to Twitter" %}
+                    {% post_to_gplus object_or_url "Post to Google+!" %}
+                </div>
+                <hr>
+                {% endfor %}
+
+                <!-- Pager -->
+                {% if articles.has_next %}
+                <ul class="pager">
+                    <li class="next">
+                        <a href="?page={{ articles.next_page_number }}">Older Posts &rarr;</a>
+                    </li>
+                </ul>
+                {% endif %}
+                {% if articles.has_previous %}
+                <ul class="pager">
+                    <li class="previous">
+                       <a href="?page={{ articles.previous_page_number }}"> &larr; Fresh Posts </a>
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <hr>
+{% endblock content %}

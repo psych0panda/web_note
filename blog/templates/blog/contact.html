@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block header %}
+        <header class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>{LocalCode}</h1>
+                        <hr class="small">
+                        <span class="subheading">My Contacts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>Round the clock, without breaks and days off</p>
+                <form name="sentMessage" id="contactForm" novalidate>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls ">
+                            <label>Email</label>
+                            <p class="form-control-static">i.pyatigorets@gmail.com</p>
+                            <a href="https://plus.google.com/u/0/114770436914598989729">G+</a>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Twitter</label>
+                            <p class="form-control-static">@sixth_fox</p>
+                            <a href="https://twitter.com/sixth_fox">Twitter</a>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>GitHub</label>
+                            <p class="form-control-static">i.pyatigorets</p>
+                            <a href="https://github.com/sixth-fox">GitHub</a>
+                        </div>
+                    </div>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+{% endblock content %}

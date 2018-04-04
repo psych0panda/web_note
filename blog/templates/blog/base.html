@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  {% load bootstrap3 %}
+  {% load staticfiles %}
+  {% load socialaccount %}
+  {% load social_share %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="python, django, web_development">
+    <meta name="author" content="sixth_fox">
+
+    <title>LocalCode</title>
+
+    <!-- favicon -->
+    <link href="{% static 'blog/img/favicon.ico' %}" type="image/x-icon" rel="shortcut icon">
+
+    <!-- Prism -->
+    <script src="{% static 'blog/prism.js' %}"></script>
+    <link href="{% static 'blog/prism.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'blog/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!--Tinymce Text-Editor (Must be in Head Tag) -->
+    <script src="{% static 'blog/js/tinymce/tinymce.min.js' %}"></script>
+
+    <!-- Theme CSS -->
+    <link href="{% static 'blog/css/clean-blog.min.css' %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static 'blog/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript" src="{% static 'blog/js/tinymce/custom.js' %}" ></script>
+    <!-- Custom Select Form -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="logo" href="{% url 'blog:home' %}">
+                <img src="{% static 'blog/img/logo.png'%}" class="img-responsive" alt="LocalCode"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                {% if user.is_superuser %}
+                <ul class="nav navbar-nav navbar-left">
+                    <li role="presentation">
+                        <a href="{% url 'blog:create_article' %}">New Article</a>
+                    </li>
+                </ul>
+                {% endif %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li role="presentation">
+                        <a href="{% url 'blog:home' %}">Home</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="{% url 'blog:about' %}">About</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="{% url 'blog:contact' %}">Contact</a>
+                    </li>
+                    <li role="presentation">
+                        {% if user.is_authenticated %}
+                          <a href="{% url 'users:logout' %}">{% bootstrap_icon "user" %}{{ user.username }}</a>
+                        {% else %}
+                          <a href="{% url 'users:login' %}">{% bootstrap_icon "log-in" %}</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+{% block header %}{% endblock header %}
+{% block content %}{% endblock content %}
+
+<!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            {% if user.is_authenticated %}
+                           <a href="{% provider_login_url "twitter" process="connect" method="js_sdk"%}">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                            <a href="{% provider_login_url "google" process="connect" method="js_sdk"%}">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-google fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                            <a href="{% provider_login_url "github" process="connect" method="js_sdk" %}">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                            {% else %}
+                            <a href="{% provider_login_url "twitter" process="login" method="js_sdk" %}">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                            <a href="{% provider_login_url "google" process="login" method="js_sdk" %}">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-google fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                            <a href="{% provider_login_url "github" process="login" method="js_sdk" %}">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                            {% endif %}
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p class="copyright text-muted">Copyright &copy; 6th_fox 2k18</p>
+        </div>
+    </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+    <!-- jQuery -->
+    <script src="{% static 'blog/vendor/jquery/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'blog/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="{% static 'blog/js/jqBootstrapValidation.js' %}"></script>
+    <script src="{% static 'blog/js/contact_me.js' %}"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="{% static 'blog/js/clean-blog.min.js' %}"></script>
+
+</body>
+
+</html>

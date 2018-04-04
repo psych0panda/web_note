@@ -1,0 +1,63 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block header %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <header class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>{LocalCode}</h1>
+                        <hr class="small">
+                        <span class="subheading">One more things</span>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-preview">
+                        <h1>{{ article.title }}</h1>
+                        <h3 class="subheading">{{ article.subtitle }}</h3>
+                        <p class="post-meta">Posted by <a href="{{article.owner.id}}">{{article.owner}}</a> {{ article.date_created|date:'M d, Y H:i' }}</p>
+                        <small><p class="post-meta">{% bootstrap_icon "tag" %}<a href="{% url 'blog:category' article.category_id %}">{{article.category}}</a></p></small>
+                            {% if request.user.is_superuser %}
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Tools
+                                <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><form action="{% url 'blog:delete_article' article.id %}" method="post">
+                                           {% csrf_token %}
+                                           <button type="submit" class="btn btn-default">Remove
+                                              {% bootstrap_icon "remove" %}
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li><a href="{% url 'blog:update_article' article.id %}">
+                                            <button type="submit" class="btn btn-default">Edit
+                                               {% bootstrap_icon "edit" %}
+                                            </button>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% endif %}
+                        <hr>
+                        {{ article.text|safe }}
+                    </div>
+                    <hr>
+                </div>
+            </div>
+    </div>
+{% endblock content %}

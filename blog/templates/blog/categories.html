@@ -1,0 +1,10 @@
+<p>Categories</p>
+<ul>
+    {%for category in categories%}
+      <li>
+      <a href="{% url 'blog:category' category.id %}">{{category}}</a>
+  </li>
+    {%empty%}
+      <li>no category</li>
+    {%endfor%}
+</ul>

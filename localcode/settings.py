@@ -119,7 +119,7 @@ SOCIAL_AUTH_TWITTER_SECRET = config('SOCIAL_AUTH_TWITTER_SECRET')
 LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/'
 
-USER_ADMIN = 'sixth_fox'
+USER_ADMIN = config('USER_ADMIN')
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

@@ -177,7 +177,7 @@ STATIC_ROOT = os.path.join(_PATH, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(_PATH, 'blog', 'static'),
+    os.path.join(_PATH, 'static', 'blog'),
 )
 
 STATICFILES_FINDERS = (
@@ -205,9 +205,9 @@ if os.getcwd() == '/app':
 
     # Configuring Static Resources
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    STATIC_ROOT = 'staticfiles'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
+        os.path.join(BASE_DIR, 'static', 'blog'),
     )
 
     DEBUG = False

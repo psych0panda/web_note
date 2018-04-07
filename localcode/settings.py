@@ -169,6 +169,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 _PATH = os.path.abspath(os.path.dirname(__file__))
+_BASE_DIR = os.path.abspath('blog')
 
 MEDIA_ROOT = os.path.join(_PATH, 'media')
 MEDIA_URL = '/media/'
@@ -177,7 +178,7 @@ STATIC_ROOT = os.path.join(_PATH, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(_PATH, 'static', 'blog'),
+    os.path.join(_BASE_DIR, 'static'),
 )
 
 STATICFILES_FINDERS = (
@@ -204,10 +205,11 @@ if os.getcwd() == '/app':
     ALLOWED_HOSTS = ['localcode.herokuapp.com']
 
     # Configuring Static Resources
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    _PATH = os.path.abspath(os.path.dirname(__file__))
+    _BASE_DIR = os.path.abspath('blog')
+    STATIC_ROOT = os.path.join(_PATH, 'static')
     STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static', 'blog'),
+        os.path.join(_BASE_DIR, 'static'),
     )
 
     DEBUG = False

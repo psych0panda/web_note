@@ -212,6 +212,6 @@ if os.getcwd() == '/app':
         os.path.join(_BASE_DIR, 'static'),
     )
 
-    DEBUG = True
+    DEBUG = False
 
     # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

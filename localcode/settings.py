@@ -18,6 +18,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 
 import os
+from os.path import join, normpath
 from decouple import config
 from decouple import Csv
 
@@ -78,7 +79,7 @@ ROOT_URLCONF = 'localcode.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'blog', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

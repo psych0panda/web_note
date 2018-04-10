@@ -1,3 +1,44 @@
-{% extends 'blog/create_article.html' %}
+{% extends 'blog/base.html' %}
 {% load bootstrap3 %}
 {% load staticfiles %}
+
+
+{% block header %}
+        <header class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>{LocalCode}</h1>
+                        <hr class="small">
+                        <span class="subheading">Learned something new? Tell me!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <form action="{% url 'blog:update_article' article.id %}" id="contactForm" method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    {% bootstrap_form form %}
+
+                    <br>
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <button type="submit" class="btn btn-default">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+{% endblock content %}

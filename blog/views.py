@@ -49,6 +49,7 @@ def read_article(request, article_id):
 @login_required(login_url='users:login')
 def update_article(request, article_id):
     article = Article.objects.get(id=article_id)
+    category_ = article.category
     if article.owner != request.user:
         raise Http404
     if request.method != 'POST':
@@ -57,7 +58,7 @@ def update_article(request, article_id):
         form = ArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid:
             form.save()
-            return HttpResponseRedirect(reverse('blog:latest_article'))
+            return HttpResponseRedirect(reverse('blog:category', args=[category_.id]))
     context = {'article': article, 'form': form}
     return render(request, 'blog/update_article.html', context)
 

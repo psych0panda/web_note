@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     class Meta:
         verbose_name = 'categories'
@@ -18,7 +18,7 @@ class Category(models.Model):
 class Article(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, unique=True)
     subtitle = models.CharField(max_length=200)
     text = HTMLField()
     date_created = models.DateTimeField(auto_now_add=True)

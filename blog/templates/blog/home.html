@@ -27,15 +27,19 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 {% for article in articles %}
                 <div class="post-preview">
-                    <a href="{% url 'blog:read_article' article.id %}">
+                    <a href="{% url 'blog:read_article' article.title %}">
                         <h1 class="post-title">
                             {{ article.title }}
                         </h1>
                         <h3 class="post-subtitle">
                             {{ article.subtitle }}
                         </h3>
-                        <p class="post-meta">Posted by <a href="{{article.owner.id}}">{{article.owner}}</a> {{ article.date_created|date:'M d, Y H:i' }}</p>
-                        <p><small class="post-meta">{% bootstrap_icon "tag" %}<a href="{% url 'blog:category' article.category_id%}">{{article.category}}</a></small></p>
+                        <p class="post-meta">Posted
+                            by {{ article.owner }} {{ article.date_created|date:'M d, Y H:i' }}</p>
+                        <p>
+                            <small class="post-meta">{% bootstrap_icon "tag" %}<a
+                                    href="{% url 'blog:category' article.category %}">{{ article.category }}</a></small>
+                        </p>
                         {{ article.text|safe }}
                     </a>
                     {% post_to_twitter "New Article: {{object.title}}. Check it out!" object_or_url "Post to Twitter" %}

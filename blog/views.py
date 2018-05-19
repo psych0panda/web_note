@@ -37,18 +37,16 @@ def create_article(request):
     return render(request, 'blog/create_article.html', context)
 
 
-def read_article(request, article_id):
-    article = Article.objects.get(id=article_id)
+def read_article(request, article_title):
+    article = Article.objects.get(title=article_title)
     context = {'article': article}
     return render(request, 'blog/read_article.html', context)
 
 
-#Можно было бы использовать Artical.objects.values() с перечеслением необходимых полей
-#Но делать этого из-за 2 полей я конечно же не буду
 @user_passes_test(username_check)
 @login_required(login_url='users:login')
-def update_article(request, article_id):
-    article = Article.objects.get(id=article_id)
+def update_article(request, article_title):
+    article = Article.objects.get(title=article_title)
     category_ = article.category
     if article.owner != request.user:
         raise Http404
@@ -58,7 +56,7 @@ def update_article(request, article_id):
         form = ArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid:
             form.save()
-            return HttpResponseRedirect(reverse('blog:category', args=[category_.id]))
+            return HttpResponseRedirect(reverse('blog:category', args=[category_.name]))
     context = {'article': article, 'form': form}
     return render(request, 'blog/update_article.html', context)
 
@@ -72,8 +70,8 @@ def latest_article(request):
 
 @user_passes_test(username_check)
 @login_required(login_url='users:login')
-def delete_article(request, article_id):
-    article = get_object_or_404(Article, id=article_id)
+def delete_article(request, article_title):
+    article = get_object_or_404(Article, title=article_title)
     category = article.category
     if article.owner != request.user:
         raise Http404
@@ -97,8 +95,8 @@ def create_category(request):
 
 
 @login_required(login_url='users:login')
-def category(request, category_id):
-    category_ = Category.objects.get(id=category_id)
+def category(request, category_name):
+    category_ = Category.objects.get(name=category_name)
     articles = category_.article_set.order_by('-date_created')
     articles = pager(request, articles)
     context = {'category': category, 'articles': articles}

@@ -77,7 +77,7 @@ def delete_article(request, article_title):
         raise Http404
     if request.method == 'POST':
         article.delete()
-        return HttpResponseRedirect(reverse('blog:category', args=[category.id]))
+        return HttpResponseRedirect(reverse('blog:category', args=[category.name]))
 
 
 @user_passes_test(username_check)

@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     # social_share
     'django_social_share',
     # other
+    'el_pagination',
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'tinymce',
@@ -87,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },

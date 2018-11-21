@@ -16,8 +16,7 @@ def username_check(user):
 
 
 def home(request):
-    articles = Article.objects.order_by('-date_created')
-    articles = pager(request, articles)
+    articles = Article.objects.all()
     return render(request, 'blog/home.html', context={'articles': articles})
 
 

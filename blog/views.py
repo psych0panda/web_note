@@ -100,13 +100,15 @@ def create_category(request):
     return render(request, 'blog/create_category.html', context)
 
 
+@page_template('blog/entry_list_page.html')
 @login_required(login_url='users:login')
-def category(request, category_name):
+def category(request, category_name, template='blog/category.html', extra_context=None):
     category_ = Category.objects.get(name=category_name)
-    articles = category_.article_set.order_by('-date_created')
-    articles = home(request, articles)
+    articles = category_.article_set.all()
     context = {'category': category, 'articles': articles}
-    return render(request, 'blog/category.html', context)
+    if extra_context is not None:
+        context.update(extra_context)
+    return render(request, template, context)
 
 
 @login_required(login_url='users:login')

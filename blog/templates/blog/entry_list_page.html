@@ -1,55 +1,35 @@
-{% extends 'blog/base.html' %}
 {% load bootstrap3 %}
 {% load staticfiles %}
-{% block header %}
+{% load el_pagination_tags %}
 {% load social_share %}
-
-        <header class="intro-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
-                        <h1>{LocalCode}</h1>
-                        <hr class="small">
-                        <span class="subheading">One more things</span>
-                    </div>
-                    <hr>
-                </div>
-            </div>
-        </div>
-    </header>
-{% endblock header %}
 
 {% block content %}
         <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                {% paginate articles %}
                 {% for article in articles %}
                 <div class="post-preview">
                     <a href="{% url 'blog:read_article' article.title %}">
-                        <h1 class="post-title">
+                        <h3 class="post-title">
                             {{ article.title }}
-                        </h1>
+                        </h3>
                         <h3 class="post-subtitle">
                             {{ article.subtitle }}
                         </h3>
-                        <p class="post-meta">Posted
-                            by {{ article.owner }} {{ article.date_created|date:'M d, Y H:i' }}</p>
+                        <p class="post-meta">Posted by {{ article.owner }}
+                            </a> {{ article.date_created|date:'M d, Y H:i' }}</p>
                         <p>
-                            <small class="post-meta">{% bootstrap_icon "tag" %}<a
-                                    href="{% url 'blog:category' article.category %}">{{ article.category }}</a></small>
+                            <div class="post-meta">{% bootstrap_icon "tag" %}<a
+                                    href="{% url 'blog:category' article.category %}">{{ article.category }}</a></div>
                         </p>
                         {{ article.text|safe }}
                     </a>
-                    {% post_to_twitter "New Article: {{object.title}}. Check it out!" object_or_url "Post to Twitter" %}
-                    {% post_to_gplus object_or_url "Post to Google+!" %}
+                    <p class="post-meta">{% post_to_twitter "New Article: {{object.title}}. Check it out!" object_or_url "Post to Twitter" %}
+                    {% post_to_linkedin object.title object_or_url "Post to LinkedIn" %}</p>
+
                 </div>
                 <hr>
                 {% endfor %}
-            </div>
-        </div>
-    </div>
+                {% show_more %}
 
-    <hr>
 {% endblock content %}

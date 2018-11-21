@@ -117,9 +117,9 @@
                     </li>
                     <li role="presentation">
                         {% if user.is_authenticated %}
-                          <a href="{% url 'users:logout' %}">{% bootstrap_icon "user" %}{{ user.username }}</a>
+                          <a href="{% url 'users:logout' %}">{{ user.username }}</a>
                         {% else %}
-                          <a href="{% url 'users:login' %}">{% bootstrap_icon "log-in" %}</a>
+                          <a href="{% url 'users:login' %}">Login</a>
                         {% endif %}
                     </li>
                 </ul>

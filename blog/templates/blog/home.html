@@ -3,7 +3,6 @@
 {% load staticfiles %}
 {% block header %}
 {% load social_share %}
-
         <header class="intro-header">
         <div class="container">
             <div class="row">
@@ -22,5 +21,13 @@
 
 {% block content %}
         <!-- Main Content -->
-   {% include page_tamplate %}
+<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
+{% include page_template %}
+   {% block js %}
+    {{ block.super }}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
+    <script>$.endlessPaginate({paginateOnScroll: true});</script>
+    {% endblock %}
+</div>
 {% endblock content %}

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from el_pagination.decorators import page_template
 from django.urls import reverse
 from django.contrib.auth.decorators import user_passes_test
 from django.conf import settings
@@ -15,9 +15,16 @@ def username_check(user):
     return user.username == settings.USER_ADMIN
 
 
-def home(request):
-    articles = Article.objects.all()
-    return render(request, 'blog/home.html', context={'articles': articles})
+@page_template('blog/entry_list_page.html')
+def home(request,
+         template='blog/home.html',
+         extra_context=None):
+    context = {
+        'articles': Article.objects.all(),
+    }
+    if extra_context is not None:
+        context.update(extra_context)
+    return render(request, template, context)
 
 
 @user_passes_test(username_check)
@@ -97,7 +104,7 @@ def create_category(request):
 def category(request, category_name):
     category_ = Category.objects.get(name=category_name)
     articles = category_.article_set.order_by('-date_created')
-    articles = pager(request, articles)
+    articles = home(request, articles)
     context = {'category': category, 'articles': articles}
     return render(request, 'blog/category.html', context)
 
@@ -107,19 +114,6 @@ def categories(request):
     list_categories = Category.objects.all()
     context = {'categories': list_categories}
     return render(request, 'blog/categories.html', context)
-
-
-def pager(request, articles):
-    page = request.GET.get('page', 1)
-
-    paginator = Paginator(articles, 2)
-    try:
-        articles = paginator.get_page(page)
-    except PageNotAnInteger:
-        articles = paginator.page(1)
-    except EmptyPage:
-        articles = paginator.page(paginator.num_pages)
-    return articles
 
 
 def about(request):

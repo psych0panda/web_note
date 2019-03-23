@@ -5,6 +5,9 @@
 
 {% block content %}
         <!-- Main Content -->
+    <!-- Prism -->
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/js/tinymce/plugins/codesample/css/prism.css' %}">
+    <script src="{% static 'blog/js/tinymce/plugins/codesample/js/prism.js' %}"></script>
 
                 {% paginate articles %}
                 {% for article in articles %}
@@ -16,8 +19,9 @@
                         <h3 class="post-subtitle">
                             {{ article.subtitle }}
                         </h3>
+                        </a>
                         <p class="post-meta">Posted by {{ article.owner }}
-                            </a> {{ article.date_created|date:'M d, Y H:i' }}</p>
+                            {{ article.date_created|date:'M d, Y H:i' }}</p>
                         <p>
                             <div class="post-meta">{% bootstrap_icon "tag" %}<a
                                     href="{% url 'blog:category' article.category %}">{{ article.category }}</a></div>
